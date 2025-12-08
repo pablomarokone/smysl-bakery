@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -31,7 +32,7 @@ export default function Header() {
 
           {/* Логотип в центре */}
           <Link href="/" className="flex justify-center relative z-10">
-            <img src="/svg/logo.svg" alt="СМЫСЛ есть" className="h-12 w-auto object-contain" />
+            <Image src="/svg/logo.svg" alt="СМЫСЛ есть" width={120} height={48} className="h-12 w-auto object-contain" />
           </Link>
         </div>
       </div>
@@ -58,7 +59,7 @@ export default function Header() {
                 </svg>
               ) : (
                 /* Symbol.svg */
-                <img src="/svg/symbol.svg" alt="Меню" style={{ width: '64px', height: '64px', objectFit: 'contain' as const }} />
+                <Image src="/svg/symbol.svg" alt="Меню" width={64} height={64} style={{ objectFit: 'contain' }} />
               )}
             </div>
             <div>
@@ -68,7 +69,7 @@ export default function Header() {
 
           {/* Логотип по центру */}
           <Link href="/" className="flex justify-center relative z-10">
-            <img src="/svg/logo.svg" alt="СМЫСЛ есть" className="h-20 w-auto object-contain" />
+            <Image src="/svg/logo.svg" alt="СМЫСЛ есть" width={180} height={80} className="h-20 w-auto object-contain" />
           </Link>
         </div>
       </div>
@@ -92,9 +93,11 @@ export default function Header() {
               </svg>
             </button>
 
-            <img
+            <Image
               src="/svg/logo.svg"
               alt="СМЫСЛ есть"
+              width={180}
+              height={80}
               className="h-20 w-auto object-contain"
             />
           </div>

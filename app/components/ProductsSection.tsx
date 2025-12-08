@@ -64,8 +64,7 @@ const products = [
 export default function ProductsSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
-  const [direction, setDirection] = useState<'next' | 'prev' | null>(null);
-  const [scrollOffset, setScrollOffset] = useState(0);
+  // удалены неиспользуемые переменные direction и scrollOffset
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -79,8 +78,6 @@ export default function ProductsSection() {
         // Вычисляем прогресс прокрутки секции (от -1 до 1)
         const progress = (windowHeight - sectionTop) / (windowHeight + sectionHeight);
         const offset = (progress - 0.5) * 100; // От -50 до 50
-        
-        setScrollOffset(offset);
       }
     };
 
@@ -92,23 +89,19 @@ export default function ProductsSection() {
 
   const nextProduct = () => {
     if (isAnimating) return;
-    setDirection('next');
     setIsAnimating(true);
     setCurrentIndex((prev) => (prev + 1) % products.length);
     setTimeout(() => {
       setIsAnimating(false);
-      setDirection(null);
     }, 400);
   };
 
   const prevProduct = () => {
     if (isAnimating) return;
-    setDirection('prev');
     setIsAnimating(true);
     setCurrentIndex((prev) => (prev - 1 + products.length) % products.length);
     setTimeout(() => {
       setIsAnimating(false);
-      setDirection(null);
     }, 400);
   };
 
@@ -228,7 +221,7 @@ export default function ProductsSection() {
               else { scale = 0.75; opacity = 0.3; }
               if (offset === 0) {
                 // Анимация появления активной карточки только при листании влево
-                let style = {
+                const style = {
                   transform: `scale(1)`,
                   opacity: 1,
                   transition: 'opacity 0.5s, transform 0.5s',

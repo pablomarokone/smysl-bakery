@@ -45,9 +45,11 @@ export default function AboutSection() {
     <section id="about" className="w-full py-16 bg-primary relative overflow-visible">
       {/* Полупрозрачный слой узоров */}
       <div className="absolute inset-0 pointer-events-none z-[1] opacity-90">
-        <img
+        <Image
           src="/svg/uzr_bg.svg"
           alt=""
+          width={1920}
+          height={1080}
           className="w-full h-full"
           style={{ objectFit: 'fill' }}
           draggable={false}

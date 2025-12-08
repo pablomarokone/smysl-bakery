@@ -60,23 +60,39 @@ const news = [
   },
 ];
 
-const shareButtons = [
-  { id: "vk", label: "VK", icon: "🔗", url: (title) => `https://vk.com/share.php?url=` },
-  { id: "telegram", label: "Telegram", icon: "📱", url: (title) => `https://t.me/share/url?url=` },
-  { id: "whatsapp", label: "WhatsApp", icon: "💬", url: (title) => `https://wa.me/?text=` },
-  { id: "ok", label: "OK", icon: "✓", url: (title) => `https://ok.ru/share?url=` },
+type NewsItem = {
+  id: number;
+  date: string;
+  title: string;
+  excerpt: string;
+  image: string;
+  fullContent: string;
+};
+
+type ShareButton = {
+  id: string;
+  label: string;
+  icon: string;
+  url: string;
+};
+
+const shareButtons: ShareButton[] = [
+  { id: "vk", label: "VK", icon: "🔗", url: "https://vk.com/share.php?url=" },
+  { id: "telegram", label: "Telegram", icon: "📱", url: "https://t.me/share/url?url=" },
+  { id: "whatsapp", label: "WhatsApp", icon: "💬", url: "https://wa.me/?text=" },
+  { id: "ok", label: "OK", icon: "✓", url: "https://ok.ru/share?url=" },
 ];
 
 export default function NewsSection() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [selectedNews, setSelectedNews] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [selectedNews, setSelectedNews] = useState<NewsItem | null>(null);
 
   const nextNews = () => {
-    setCurrentIndex((prev) => (prev + 1) % news.length);
+    setCurrentIndex((prev: number) => (prev + 1) % news.length);
   };
 
   const prevNews = () => {
-    setCurrentIndex((prev) => (prev - 1 + news.length) % news.length);
+    setCurrentIndex((prev: number) => (prev - 1 + news.length) % news.length);
   };
 
   // Блокируем прокрутку body когда модальное окно открыто
@@ -102,18 +118,17 @@ export default function NewsSection() {
     }
   }, [selectedNews]);
 
-  const handleShare = (platform, title) => {
+  const handleShare = (platform: string, title: string) => {
     const url = typeof window !== "undefined" ? window.location.href : "";
     const text = encodeURIComponent(title);
     
-    const shareUrls = {
+    const shareUrls: Record<string, string> = {
       vk: `https://vk.com/share.php?url=${url}&title=${text}`,
       telegram: `https://t.me/share/url?url=${url}&text=${text}`,
       whatsapp: `https://wa.me/?text=${text} ${url}`,
       ok: `https://ok.ru/share?url=${url}`,
     };
-    
-    if (shareUrls[platform]) {
+    if (platform in shareUrls) {
       window.open(shareUrls[platform], "_blank", "width=600,height=400");
     }
   };
@@ -122,9 +137,11 @@ export default function NewsSection() {
     <section id="news" className="w-full py-16 md:py-20 relative overflow-hidden" style={{ backgroundColor: '#675b53' }}>
       {/* Фоновый узор */}
       <div className="absolute inset-0 pointer-events-none opacity-20">
-        <img
+        <Image
           src="/svg/uzr_bg.svg"
           alt=""
+          width={1920}
+          height={1080}
           className="w-full h-full"
           style={{ objectFit: 'fill' }}
           draggable={false}
@@ -179,7 +196,7 @@ export default function NewsSection() {
         </button>
         {/* Заголовок и иконка по центру */}
         <div className="mb-8 md:mb-12 flex flex-col items-center justify-center">
-          <img src="/svg/symbol.svg" alt="" className="w-15 h-15 md:w-20 md:h-20 mb-2" />
+          <Image src="/svg/symbol.svg" alt="" width={80} height={80} className="w-15 h-15 md:w-20 md:h-20 mb-2" />
           <h2 className="text-3xl md:text-5xl font-normal text-white uppercase text-center">
             НАШИ НОВОСТИ
           </h2>
