@@ -1,76 +1,96 @@
+        <div className="rounded-2xl overflow-hidden mt-8" style={{ height: '400px' }}>
+          <iframe
+            src="https://yandex.ru/map-widget/v1/?um=constructor%3Aa1b0899bfd294471a0bb5d91ac1e5b3c1c68111a48c26b2d2cdad140c84908ff&amp;source=constructor"
+            width="100%"
+            height="400"
+            frameBorder="0"
+            style={{ border: 0, width: '100%', height: '400px' }}
+            allowFullScreen={true}
+            title="Карта Яндекса"
+          ></iframe>
+        </div>
+import { FaInstagram, FaVk, FaTelegramPlane, FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
+
 export default function Footer() {
   return (
-    <footer id="contacts" className="bg-brown text-beige">
-      <div className="container mx-auto px-4 py-16">
-        <div className="grid md:grid-cols-3 gap-12 mb-12">
-          {/* Логотип */}
+    <footer id="contacts" className="w-full py-16" style={{ backgroundColor: '#544a44' }}>
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+          {/* Логотип и иконки */}
           <div>
-            <div className="text-3xl font-serif mb-2">СМЫСЛ</div>
-            <div className="text-xl font-serif italic">есть</div>
-            <div className="flex gap-4 mt-6">
+            <div className="mb-6">
+              <img src="/svg/logo.svg" alt="СМЫСЛ есть" className="h-12" />
+            </div>
+            <div className="flex gap-4">
               <a
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full border-2 border-beige flex items-center justify-center hover:bg-beige hover:text-brown transition-all"
+                className="w-10 h-10 rounded-full border-2 flex items-center justify-center hover:bg-opacity-80 transition-all text-2xl"
+                style={{ borderColor: '#ffecc6', color: '#ffecc6' }}
+                aria-label="Instagram"
               >
-                📷
+                <FaInstagram />
               </a>
               <a
                 href="https://vk.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full border-2 border-beige flex items-center justify-center hover:bg-beige hover:text-brown transition-all"
+                className="w-10 h-10 rounded-full border-2 flex items-center justify-center hover:bg-opacity-80 transition-all text-2xl"
+                style={{ borderColor: '#ffecc6', color: '#ffecc6' }}
+                aria-label="VK"
               >
-                VK
+                <FaVk />
               </a>
               <a
                 href="https://t.me"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full border-2 border-beige flex items-center justify-center hover:bg-beige hover:text-brown transition-all"
+                className="w-10 h-10 rounded-full border-2 flex items-center justify-center hover:bg-opacity-80 transition-all text-2xl"
+                style={{ borderColor: '#ffecc6', color: '#ffecc6' }}
+                aria-label="Telegram"
               >
-                ✈️
+                <FaTelegramPlane />
               </a>
             </div>
           </div>
 
           {/* Контакты */}
           <div>
-            <h3 className="text-xl font-bold mb-4">Контакты</h3>
-            <div className="space-y-3">
+            <h3 className="text-lg font-bold mb-4" style={{ color: '#c1dedc' }}>Контакты</h3>
+            <div className="space-y-3 text-white">
               <a
                 href="tel:+78002002022"
-                className="flex items-center gap-2 hover:text-primary transition-colors"
+                className="flex items-center gap-2 hover:opacity-80 transition-colors"
               >
-                📞 8 800 200 20 22
+                <FaPhoneAlt className="text-lg" /> 8 800 200 20 22
               </a>
               <a
                 href="mailto:info@smysl-est.ru"
-                className="flex items-center gap-2 hover:text-primary transition-colors"
+                className="flex items-center gap-2 hover:opacity-80 transition-colors"
               >
-                ✉️ info@smysl-est.ru
+                <FaEnvelope className="text-lg" /> info@smysl-est.ru
               </a>
             </div>
           </div>
 
           {/* Адрес */}
           <div>
-            <h3 className="text-xl font-bold mb-4">Адрес</h3>
-            <address className="not-italic space-y-2">
-              <p>📍 RU 1675, Россия,</p>
+            <h3 className="text-lg font-bold mb-4" style={{ color: '#c1dedc' }}>Адрес</h3>
+            <address className="not-italic space-y-2 text-white">
+              <p className="flex items-center gap-2"><FaMapMarkerAlt className="text-lg" /> RU 1675, Россия,</p>
               <p>г. Москва, ул. Святоозёрская, дом 8</p>
             </address>
           </div>
 
           {/* Покупателям */}
           <div>
-            <h3 className="text-xl font-bold mb-4">Покупателям</h3>
-            <ul className="space-y-2">
+            <h3 className="text-lg font-bold mb-4" style={{ color: '#c1dedc' }}>Покупателям</h3>
+            <ul className="space-y-2 text-white">
               <li>
                 <a
                   href="#"
-                  className="hover:text-primary transition-colors"
+                  className="hover:opacity-80 transition-colors"
                 >
                   Стандарты качества
                 </a>
@@ -78,7 +98,7 @@ export default function Footer() {
               <li>
                 <a
                   href="#"
-                  className="hover:text-primary transition-colors"
+                  className="hover:opacity-80 transition-colors"
                 >
                   FAQ
                 </a>
@@ -87,15 +107,24 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Карта */}
-        <div className="rounded-2xl overflow-hidden h-64 bg-beige-dark mb-8">
-          <div className="w-full h-full flex items-center justify-center text-brown text-xl">
-            🗺️ Карта (интеграция Google Maps / Яндекс.Карты)
-          </div>
+
+        {/* Карта Яндекса */}
+
+        {/* Карта Яндекса */}
+        <div className="rounded-2xl overflow-hidden mt-8" style={{ height: '400px' }}>
+          <iframe
+            src="https://yandex.ru/map-widget/v1/?um=constructor%3Aa1b0899bfd294471a0bb5d91ac1e5b3c1c68111a48c26b2d2cdad140c84908ff&amp;source=constructor"
+            width="100%"
+            height="400"
+            frameBorder="0"
+            style={{ border: 0, width: '100%', height: '400px' }}
+            allowFullScreen={true}
+            title="Карта Яндекса"
+          ></iframe>
         </div>
 
         {/* Copyright */}
-        <div className="text-center text-lg opacity-70 pt-8 border-t border-beige/20">
+        <div className="text-center text-white opacity-70 pt-8 border-t" style={{ borderColor: 'rgba(255, 236, 198, 0.2)' }}>
           © 2025 СМЫСЛ есть. Все права защищены.
         </div>
       </div>

@@ -8,21 +8,21 @@ export default function MissionSection() {
           {/* Первая строка с курсивом и жирным текстом */}
           <h2 className="text-3xl md:text-5xl leading-tight">
             <span className="font-normal text-brown uppercase">СОЗДАЁМ </span>
-            <span className="font-serif italic text-primary">счастливый и добрый</span>
+            <span className="great-vibes italic text-primary">счастливый и добрый</span>
             <span className="font-normal text-brown uppercase"> МИР</span>
           </h2>
           
           {/* Вторая строка */}
           <p className="text-2xl md:text-4xl leading-tight">
             <span className="font-normal text-brown uppercase">НАПОЛНЕННЫЙ </span>
-            <span className="font-serif italic text-primary">тёплыми</span>
+            <span className="great-vibes italic text-primary">тёплыми</span>
             <span className="font-normal text-brown uppercase"> МОМЕНТАМИ</span>
           </p>
           
           {/* Третья строка */}
           <p className="text-2xl md:text-4xl leading-tight">
-            <span className="font-serif italic text-brown">И </span>
-            <span className="font-serif italic text-primary">любимыми</span>
+            <span className="great-vibes italic text-brown">И </span>
+            <span className="great-vibes italic text-primary">любимыми</span>
             <span className="font-normal text-brown uppercase"> ВКУСАМИ</span>
           </p>
           

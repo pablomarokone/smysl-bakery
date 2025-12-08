@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
+import "./fonts.css";
+import SmoothScroll from "./components/SmoothScroll";
 
 const montserrat = Montserrat({ 
   subsets: ["latin", "cyrillic"],
@@ -21,6 +23,7 @@ export default function RootLayout({
   return (
     <html lang="ru" className={`${montserrat.variable}`}>
       <body className={`${montserrat.className} antialiased`}>
+        <SmoothScroll />
         {children}
       </body>
     </html>

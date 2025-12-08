@@ -1,15 +1,50 @@
+"use client";
+
+import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
+
 export default function HeartSection() {
+  const [scale, setScale] = useState(1);
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!sectionRef.current) return;
+
+      const rect = sectionRef.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      
+      // Вычисляем, насколько далеко элемент прошел через viewport
+      const elementCenter = rect.top + rect.height / 2;
+      const distance = windowHeight / 2 - elementCenter;
+      
+      // Масштаб от 1 до 1.15 при прокрутке
+      const newScale = 1 + (Math.abs(distance) / windowHeight) * 0.15;
+      setScale(Math.min(newScale, 1.15));
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <section className="py-20 bg-brown relative overflow-hidden">
-      <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+    <section ref={sectionRef} className="w-full py-20 relative overflow-hidden" style={{ backgroundColor: '#675b53' }}>
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Левая колонка - текст */}
-          <div className="text-beige space-y-6">
-            <h2 className="text-4xl md:text-5xl font-serif italic leading-tight">
+          <div className="space-y-6 text-center md:text-left flex flex-col items-center md:items-start">
+            <h2 className="text-7xl md:text-9xl great-vibes italic" style={{ color: '#fdebc1', lineHeight: '1.1' }}>
+              <style jsx>{`
+                @media (min-width: 768px) {
+                  h2 {
+                    line-height: 0.95;
+                  }
+                }
+              `}</style>
               В ритме <br />
               миллионов сердец
             </h2>
-            <p className="text-lg leading-relaxed">
+            <p className="text-lg leading-relaxed text-white">
               Наша выпечка — это любимый вкус, который объединяет миллионы
               сердец, живущих по всей стране. Миллионы завтраков, пропитанных
               заботой и миллионы чаепитий, которые делают нас чуточку ближе.
@@ -18,37 +53,16 @@ export default function HeartSection() {
           </div>
 
           {/* Правая колонка - изображение в форме сердца */}
-          <div className="relative">
-            <div className="aspect-square relative">
-              {/* Рамка в форме сердца */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="relative w-full h-full">
-                  {/* SVG сердце как маска */}
-                  <svg
-                    viewBox="0 0 100 100"
-                    className="absolute inset-0 w-full h-full"
-                  >
-                    <defs>
-                      <clipPath id="heartClip">
-                        <path d="M50,90 C50,90 10,65 10,40 C10,25 20,15 30,15 C40,15 45,20 50,30 C55,20 60,15 70,15 C80,15 90,25 90,40 C90,65 50,90 50,90 Z" />
-                      </clipPath>
-                    </defs>
-                  </svg>
-                  
-                  {/* Изображение пшеницы */}
-                  <div
-                    className="absolute inset-0 bg-gradient-to-br from-amber-300 to-amber-600 flex items-center justify-center text-9xl"
-                    style={{ clipPath: "url(#heartClip)" }}
-                  >
-                    🌾
-                  </div>
-                  
-                  {/* Декоративные круги по краям */}
-                  <div className="absolute -top-4 -right-4 w-16 h-16 rounded-full bg-beige/30" />
-                  <div className="absolute -bottom-4 -left-4 w-20 h-20 rounded-full bg-beige/20" />
-                  <div className="absolute top-1/4 -right-8 w-12 h-12 rounded-full bg-beige/25" />
-                </div>
-              </div>
+          <div className="relative flex items-center justify-center">
+            <div className="relative w-full max-w-2xl overflow-hidden rounded-3xl -translate-x-[10%] md:translate-x-0" style={{ transform: `scale(${scale * 1.3})`, transition: 'transform 0.3s ease-out' }}>
+              <Image
+                src="/img/rythm1.png"
+                alt="Ритм"
+                width={650}
+                height={780}
+                className="w-full h-auto object-cover"
+                priority
+              />
             </div>
           </div>
         </div>
