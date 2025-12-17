@@ -21,6 +21,18 @@
     transition: transform 2.5s, opacity 2.5s;
   }
 
+  @media (max-width: 767px) {
+    .waveSvg {
+      transition: none !important;
+      transform: none !important;
+      opacity: 0.7 !important;
+    }
+    .waveScrolled {
+      --wave-scale: 1 !important;
+      --wave-opacity: 0.7 !important;
+    }
+  }
+
 .waveScrolled {
   /* Этот класс будет добавляться при скролле через JS */
   --wave-scale: 1.4;
@@ -96,6 +108,18 @@
   z-index: 1;
   animation: breadFly 8s linear infinite;
   animation-delay: 3s;
+}
+
+@media (max-width: 767px) {
+  .breadMain,
+  .bread1,
+  .breadMin,
+  .breadMicro {
+    animation: none !important;
+  }
+  .heartbeat {
+    animation: none !important;
+  }
 }
 /* ==================== */
 /* ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ */
