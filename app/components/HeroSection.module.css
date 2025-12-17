@@ -1,0 +1,461 @@
+/* Волна из muka_wave.svg */
+.waveBg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+  overflow: visible;
+}
+  .waveSvg {
+    position: absolute;
+    left: 65%;
+    top: 40%;
+    width: 1200px;
+    min-width: 900px;
+    max-width: 1600px;
+    transform: translate(-60%, -50%) scale(var(--wave-scale,1));
+    opacity: var(--wave-opacity,0.7);
+    z-index: 2;
+    transition: transform 2.5s, opacity 2.5s;
+  }
+
+.waveScrolled {
+  /* Этот класс будет добавляться при скролле через JS */
+  --wave-scale: 1.4;
+  --wave-opacity: 0;
+}
+
+/* Декоративные хлеба на фоне HeroSection */
+.breadsBg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+@keyframes breadFly {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(1.2);
+  }
+  10% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-120px) scale(1.2);
+  }
+}
+
+.breadMain {
+  position: absolute;
+  left: 40%;
+  top: 40%;
+  width: 520px;
+  transform: translate(-50%, -50%) scale(1.45);
+  opacity: 0.7;
+  z-index: 1;
+  animation: breadFly 5s linear infinite;
+  animation-delay: 0s;
+}
+.bread1 {
+  position: absolute;
+  left: 65%;
+  top: 65%;
+  width: 260px;
+  transform: translate(-50%, -50%) scale(1.35);
+  opacity: 0.5;
+  z-index: 1;
+  animation: breadFly 6s linear infinite;
+  animation-delay: 1s;
+}
+.breadMin {
+  position: absolute;
+  left: 15%;
+  top: 65%;
+  width: 180px;
+  transform: translate(-50%, -50%) scale(1.3);
+  opacity: 0.4;
+  z-index: 1;
+  animation: breadFly 7s linear infinite;
+  animation-delay: 2s;
+}
+.breadMicro {
+  position: absolute;
+  left: 5%;
+  top: 45%;
+  width: 120px;
+  transform: translate(-50%, -50%) scale(1.25);
+  opacity: 0.3;
+  z-index: 1;
+  animation: breadFly 8s linear infinite;
+  animation-delay: 3s;
+}
+/* ==================== */
+/* ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ */
+/* ==================== */
+
+:root {
+  --header-height-mobile: 80px;
+  --header-height-desktop: 160px;
+  --color-primary: #5F8A48;
+  --color-secondary: #7BA862;
+  --color-accent: #9BC381;
+  --color-white: #ffffff;
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 2rem;
+  --spacing-lg: 3rem;
+  --spacing-xl: 4rem;
+  --container-2xl: 1400px;
+}
+
+/* ==================== */
+/* ОСНОВНАЯ ГРИД-СТРУКТУРА */
+/* ==================== */
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr; /* Шапка | Контент */
+  overflow: visible;
+  /* Компенсация шапки - первый ряд грида */
+  padding-top: var(--header-height-mobile);
+  /* УБРАЛИ градиентный фон - будет из layout */
+}
+
+@media (min-width: 768px) {
+  .hero {
+    padding-top: var(--header-height-desktop);
+  }
+}
+
+/* ==================== */
+/* ДЕКОРАТИВНЫЕ ЭЛЕМЕНТЫ */
+/* ==================== */
+
+.wheatDecor {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  z-index: 10;
+  display: none;
+  width: 180px;
+}
+
+@media (min-width: 768px) {
+  .wheatDecor {
+    display: block;
+  }
+}
+
+.wheatLeft {
+  left: 0;
+}
+
+.wheatRight {
+  right: 0;
+}
+
+@media (min-width: 1024px) {
+  .wheatDecor {
+    width: 250px;
+  }
+}
+
+/* ==================== */
+/* ОСНОВНОЙ КОНТЕНТ - ЦЕНТРИРУЮЩИЙ ГРИД */
+/* ==================== */
+
+.content {
+  grid-row: 2; /* Занимаем второй ряд основного грида */
+  position: relative;
+  z-index: 20;
+  width: 100%;
+  max-width: var(--container-2xl);
+  margin: 0 auto;
+  padding: 0 var(--spacing-sm);
+  
+  /* Ключевое: центрирующий грид с возможностью подъёма */
+  display: grid;
+  place-items: center; /* Центрирует по обеим осям */
+  min-height: 0; /* Предотвращает переполнение */
+}
+
+/* ==================== */
+/* МОБИЛЬНАЯ ВЕРСИЯ - ПРОСТОЙ ЦЕНТРИРОВАННЫЙ ГРИД */
+/* ==================== */
+
+.mobileLayout {
+  display: grid;
+  grid-template-rows: auto auto; /* Картинка сверху, текст снизу */
+  gap: var(--spacing-md);
+  justify-items: center;
+  align-items: center;
+  width: 100%;
+  /* Поднимаем весь блок ещё выше */
+  transform: translateY(-25%); /* УВЕЛИЧИЛИ с -15% до -25% */
+}
+
+@media (min-width: 768px) {
+  .mobileLayout {
+    display: none;
+  }
+}
+
+.mobileImageContainer {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 1;
+}
+
+.mobileTextContainer {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+/* ==================== */
+/* ДЕСКТОПНАЯ ВЕРСИЯ - ГРИД С КОНТРОЛЕМ ПОЛОЖЕНИЯ */
+/* ==================== */
+
+.desktopLayout {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .desktopLayout {
+    display: grid;
+    /* Две колонки для десктопа */
+    grid-template-columns: 45% 55%;
+    align-items: start; /* Выравниваем колонки по верху */
+    justify-content: space-between;
+    gap: var(--spacing-xl);
+    width: 100%;
+    /* Поднимаем весь блок ещё выше */
+    transform: translateY(-25%); /* УВЕЛИЧИЛИ с -15% до -25% */
+  }
+}
+
+/* ПЛАНШЕТЫ (768-1023px) - ВЕРТИКАЛЬНЫЙ ГРИД */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .desktopLayout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    justify-items: center;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .textContainer {
+    order: 2;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-lg);
+  }
+  
+  .imageContainer {
+    order: 1;
+    width: 100%;
+    max-width: 500px;
+  }
+}
+
+/* ТЕКСТОВАЯ КОЛОНКА - ВЫРАВНИВАНИЕ ПО ЦЕНТРУ */
+.textContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Текст слева на десктопе */
+  justify-content: center; /* Вертикальное центрирование внутри колонки */
+  height: 100%;
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .textContainer {
+    align-items: center; /* Центрируем на планшетах */
+  }
+}
+
+/* КОЛОНКА С КАРТИНКОЙ - ПРИЖАТА К ВЕРХУ И ЦЕНТРИРОВАНА */
+.imageContainer {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  max-width: 800px; /* Увеличенная картинка на десктопе */
+  /* Картинка центрируется в своей колонке и прижимается к верху */
+  align-self: start;
+  justify-self: center;
+  overflow: visible;
+}
+
+/* ==================== */
+/* ОБЩИЕ СТИЛИ ЭЛЕМЕНТОВ */
+/* ==================== */
+
+.imageGradient {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.25) 0%,
+    rgba(255, 255, 255, 0.12) 40%,
+    transparent 70%
+  );
+}
+
+.heartImage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  overflow: visible;
+}
+
+.title {
+  color: var(--color-white);
+  font-size: 2.5rem;
+  font-weight: bold;
+  line-height: 1.1;
+  text-align: inherit;
+  /* ДОБАВИЛИ отступ снизу для кнопки */
+  margin-bottom: var(--spacing-md); /* Новое свойство */
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .title {
+    font-size: 3.5rem;
+    margin-bottom: var(--spacing-lg); /* Больше отступ на планшетах */
+  }
+}
+
+@media (min-width: 1024px) {
+  .title {
+    font-size: 5rem;
+    line-height: 1;
+    margin-bottom: var(--spacing-xl); /* Ещё больше отступ на десктопе */
+  }
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 2.25rem;
+  border: 2px solid var(--color-white);
+  border-radius: 9999px;
+  background: transparent;
+  color: var(--color-white);
+  font-size: 1.125rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.button:hover {
+  background: var(--color-white);
+  color: var(--color-primary);
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .button {
+    padding: 1rem 2.5rem;
+    font-size: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .button {
+    padding: 1.125rem 3rem;
+    font-size: 1.5rem;
+    border-width: 3px;
+  }
+}
+
+/* ==================== */
+/* АНИМАЦИИ */
+/* ==================== */
+
+@keyframes heartbeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  20% {
+    transform: scale(1.04);
+  }
+  40% {
+    transform: scale(0.98);
+  }
+  60% {
+    transform: scale(1.05);
+  }
+  80% {
+    transform: scale(0.99);
+  }
+}
+
+.heartbeat {
+  animation: heartbeat 2.4s ease-in-out infinite;
+  transform-origin: center;
+}
+
+/* ==================== */
+/* ТОЧНАЯ НАСТРОЙКА ПОДЪЁМА */
+/* ==================== */
+
+/* Регулируйте эти значения для точного позиционирования */
+
+/* Поднять ещё выше (увеличивайте отрицательное значение) */
+@media (max-height: 800px) {
+  .mobileLayout,
+  .desktopLayout {
+    transform: translateY(-30%); /* Соответственно увеличили */
+  }
+}
+
+/* Опустить ниже (уменьшайте отрицательное значение) */
+@media (min-height: 1000px) {
+  .mobileLayout,
+  .desktopLayout {
+    transform: translateY(-20%); /* Соответственно увеличили */
+  }
+}
+
+/* Для ландшафтной ориентации на мобильных */
+@media (max-width: 767px) and (orientation: landscape) {
+  .mobileLayout {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    align-items: center;
+    gap: var(--spacing-lg);
+  }
+  
+  .mobileImageContainer {
+    max-width: 250px;
+  }
+  
+  .mobileTextContainer {
+    text-align: left;
+    align-items: flex-start;
+  }
+}

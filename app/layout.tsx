@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import "./fonts.css";
-import DesktopOnly from "./components/DesktopOnly";
-// SmoothScroll отключен
+import LayoutContainer from "./components/LayoutContainer";
+import './styles/swiper.css';
 
 const montserrat = Montserrat({ 
   subsets: ["latin", "cyrillic"],
@@ -23,23 +23,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru" className={`${montserrat.variable}`}>
-      <head>
-        <style>{`
-          /* МГНОВЕННЫЕ стили для мобильных */
-          @media (max-width: 768px) {
-            .mobile-only { display: block !important; }
-            .desktop-only { display: none !important; }
-          }
-          /* Десктоп - но загрузится позже */
-          @media (min-width: 769px) {
-            .mobile-only { display: none !important; }
-            .desktop-only { display: block !important; }
-          }
-        `}</style>
-      </head>
-      <body className={`${montserrat.className} antialiased`}>
-        {/* DesktopOnly оставлен для будущего использования */}
-        {children}
+      <body className={`${montserrat.className} antialiased overflow-x-hidden`}>
+        <LayoutContainer>
+          {children}
+        </LayoutContainer>
       </body>
     </html>
   );

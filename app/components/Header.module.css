@@ -1,0 +1,373 @@
+/* ==================== */
+/* ИЗОЛИРОВАННЫЕ СТИЛИ ТОЛЬКО ДЛЯ HEADER */
+/* ==================== */
+
+/* Базовый контейнер шапки */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 50;
+}
+
+/* МОБИЛЬНАЯ ВЕРСИЯ */
+.mobileContainer {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .mobileContainer {
+    display: none;
+  }
+}
+
+.mobileEllipse {
+  background-color: #5C5552;
+  padding: 1.25rem 1rem 2rem; /* Уменьшили вертикальные паддинги */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  min-height: 80px;
+  height: 80px;
+  clip-path: ellipse(85% 100% at 50% 0%);
+}
+
+.mobileMenuButton {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: opacity 0.2s;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.mobileMenuButton:hover {
+  opacity: 0.7;
+}
+
+.mobileLogo {
+  width: 140px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobileLogo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ДЕСКТОПНАЯ ВЕРСИЯ */
+.desktopContainer {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .desktopContainer {
+    display: block;
+  }
+}
+
+
+.desktopEllipse {
+  background-color: #5C5552;
+  padding: 1.25rem 1rem 2rem; /* Уменьшили вертикальные паддинги */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  min-height: 120px;
+  height: 140px; /* Фиксированная высота для точного центрирования */
+  clip-path: ellipse(85% 100% at 50% 0%);
+}
+
+.desktopMenuButton {
+  position: absolute;
+  left: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: white;
+  z-index: 10;
+  cursor: pointer;
+  transition: color 0.2s;
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+.desktopMenuButton:hover {
+  color: #9BC381;
+}
+
+.desktopMenuIcon {
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.desktopMenuIcon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.desktopMenuIcon svg {
+  stroke: white;
+  width: 36px;
+  height: 36px;
+}
+
+.desktopMenuText {
+  font-size: 1.75rem;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.desktopLogo {
+  width: 220px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -10px;
+}
+
+@media (min-width: 1024px) {
+  .desktopLogo {
+    width: 280px;
+    height: 90px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .desktopLogo {
+    width: 320px;
+    height: 100px;
+  }
+}
+
+.desktopLogo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ПОЛНОЭКРАННОЕ МЕНЮ */
+.fullscreenMenu {
+  position: fixed;
+  inset: 0;
+  top: 0;
+  z-index: 60;
+  background-color: #5C5552;
+  height: 100vh;
+  width: 100vw;
+  transition: opacity 0.5s ease-in-out;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.fullscreenMenu.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.menuContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding-top: 2rem;
+  padding-bottom: 2.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  width: 100%;
+  overflow-y: auto;
+}
+
+/* Стили для внутреннего содержимого меню */
+.menuHeader {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+
+.menuCloseButton {
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: white;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: opacity 0.2s;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.menuCloseButton:hover {
+  opacity: 0.7;
+}
+
+.menuLogo {
+  width: 180px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menuLogo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Навигация в меню */
+.menuNav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+.menuNavLink {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  transition: opacity 0.2s;
+  text-align: center;
+  line-height: 1.2;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+.menuNavLink:hover {
+  opacity: 0.7;
+}
+
+/* Социальные иконки и контакты */
+.menuFooter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: auto;
+}
+
+.socialIcons {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.socialIcon {
+  color: white;
+  transition: opacity 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.socialIcon:hover {
+  opacity: 0.7;
+}
+
+.socialIcon svg {
+  width: 2rem;
+  height: 2rem;
+}
+
+.contacts {
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  padding-top: 2rem;
+  width: 100%;
+}
+
+.phone {
+  display: block;
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  transition: opacity 0.2s;
+  text-decoration: none;
+}
+
+.phone:hover {
+  opacity: 0.7;
+}
+
+.email {
+  display: block;
+  color: white;
+  font-size: 1rem;
+  transition: opacity 0.2s;
+  text-decoration: none;
+}
+
+.email:hover {
+  opacity: 0.7;
+}
+
+/* ФИКСЫ ТОЛЬКО ДЛЯ ЭТОГО КОМПОНЕНТА */
+@media (max-width: 767px) {
+  .mobileEllipse {
+    width: 100vw;
+    max-width: 100vw;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .desktopEllipse {
+    padding: 0.75rem 1rem 1.5rem !important; /* Еще меньше */
+    min-height: 100px !important; /* Еще компактнее */
+  }
+  
+  .desktopMenuIcon {
+    width: 50px !important;
+    height: 50px !important;
+  }
+  
+  .desktopLogo {
+    width: 160px !important;
+    height: 50px !important;
+  }
+  
+  .desktopMenuText {
+    font-size: 1.25rem !important;
+  }
+}

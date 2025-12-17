@@ -1,0 +1,123 @@
+/* ==================== */
+/* ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ SWIPER */
+/* ==================== */
+:root {
+  --swiper-navigation-color: #F5E6D3; /* БЕЖЕВЫЕ СТРЕЛКИ */
+  --swiper-navigation-size: 12px;     /* РАЗМЕР СТРЕЛОК */
+}
+
+/* ==================== */
+/* ПАГИНАЦИЯ - ТОЧКИ СНИЗУ */
+/* ==================== */
+.swiper-pagination {
+  position: relative !important;
+  margin-top: 2rem !important;
+}
+
+.swiper-pagination-bullet {
+  width: 12px !important;
+  height: 12px !important;
+  background-color: #F5E6D3 !important;
+  opacity: 0.5 !important;
+  transition: all 0.3s ease !important;
+}
+
+.swiper-pagination-bullet-active {
+  opacity: 1 !important;
+  transform: scale(1.2) !important;
+}
+
+/* ==================== */
+/* СТРЕЛКИ НАВИГАЦИИ */
+/* ==================== */
+.swiper-button-prev,
+.swiper-button-next {
+  width: 56px !important;
+  height: 56px !important;
+  background-color: transparent !important;
+  border: 2px solid #F5E6D3 !important;
+  border-radius: 50% !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 4px 12px rgba(245, 230, 211, 0.2) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.swiper-button-prev svg.swiper-navigation-icon,
+.swiper-button-next svg.swiper-navigation-icon,
+svg.swiper-navigation-icon[width="11"][height="20"] {
+  width: 24px !important;  
+  height: auto !important;
+  max-height: 24px !important;
+  position: relative !important;
+}
+
+.swiper-button-prev svg.swiper-navigation-icon {
+  left: -1px !important;
+}
+
+.swiper-button-next svg.swiper-navigation-icon {
+  right: -1px !important;
+}
+
+/* ХОВЕР ЭФФЕКТ */
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+  background-color: #F5E6D3 !important;
+  border-color: #F5E6D3 !important;
+  transform: scale(1.05) !important;
+  box-shadow: 0 6px 20px rgba(245, 230, 211, 0.4) !important;
+}
+
+.swiper-button-prev:hover svg.swiper-navigation-icon,
+.swiper-button-next:hover svg.swiper-navigation-icon {
+  color: #5C5552 !important; /* ИНВЕРСИЯ ПРИ ХОВЕРЕ */
+}
+
+/* ПОЗИЦИОНИРОВАНИЕ - ВЕРНЕМ НА МЕСТО */
+.swiper-button-prev {
+  left: 10px !important;
+}
+
+.swiper-button-next {
+  right: 10px !important;
+}
+
+/* ==================== */
+/* МОБИЛЬНАЯ АДАПТАЦИЯ */
+/* ==================== */
+@media (max-width: 767px) {
+  .swiper-button-prev,
+  .swiper-button-next {
+    display: none !important;
+  }
+  
+  .swiper-pagination {
+    margin-top: 1rem !important;
+  }
+  
+  .swiper-pagination-bullet {
+    width: 10px !important;
+    height: 10px !important;
+  }
+}
+/* ==================== */
+/* FIX: ШИРИНА СЛАЙДОВ ДЛЯ КАРУСЕЛИ ПРОДУКТОВ */
+/* ==================== */
+.products-swiper .swiper-slide {
+  /* Ширина как в вашем модульном CSS */
+  width: 300px !important;
+  /* Запрет на сжатие слайдов */
+  flex-shrink: 0 !important;
+  /* Добавляем отступы для эффекта как на сайте-примере */
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .products-swiper .swiper-slide {
+    width: 350px !important;
+    padding: 0 15px;
+  }
+}

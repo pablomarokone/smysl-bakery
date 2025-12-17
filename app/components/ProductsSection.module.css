@@ -1,0 +1,68 @@
+/* Стили только для секции продуктов */
+.section {
+  width: 100%;
+  padding: 4rem 0 3rem 0; /* Увеличили верхний отступ, уменьшили нижний */
+  background-color: transparent; /* Убрали зеленый фон */
+  position: relative;
+  overflow: visible;
+}
+
+.container {
+  max-width: 80rem; /* max-w-7xl */
+  margin: 0 auto;
+  padding: 0 1rem; /* px-4 */
+  position: relative;
+  z-index: 10;
+  overflow: visible;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding: 0 1.5rem; /* sm:px-6 */
+  }
+}
+
+.titleContainer {
+  margin-bottom: 2rem; /* Уменьшили отступ от заголовка до карусели */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .titleContainer {
+    margin-bottom: 2.5rem; /* Еще меньше на десктопе */
+  }
+}
+
+.title {
+  font-size: 2rem; /* Увеличили размер шрифта */
+  font-weight: 600; /* font-normal */
+  color: #ffffff; /* Зеленый цвет вместо белого */
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.2;
+  letter-spacing: 0.05em;
+  margin-top: 1rem; /* Дополнительный верхний отступ */
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: 3.5rem; /* Больше на десктопе */
+    margin-top: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .title {
+    font-size: 4rem; /* Еще больше на больших экранах */
+  }
+}
+
+.carouselWrapper {
+  position: relative;
+  overflow: visible;
+  margin-top: -1rem; /* Еще уменьшаем отступ между заголовком и каруселью */
+}
+
