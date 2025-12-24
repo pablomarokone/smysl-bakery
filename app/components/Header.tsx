@@ -1,11 +1,15 @@
 "use client";
 
+
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import styles from "./Header.module.css";
+import { getHeaderData } from '../../lib/headerData';
+
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const header = getHeaderData();
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -18,11 +22,13 @@ export default function Header() {
     };
   }, [isMenuOpen]);
 
-  const handleNavClick = (sectionId: string) => {
+  const handleNavClick = (href: string) => {
     setIsMenuOpen(false);
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    if (href.startsWith('#')) {
+      const element = document.getElementById(href.replace('#', ''));
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 
@@ -45,7 +51,7 @@ export default function Header() {
 
           <Link href="/">
             <div className={styles.mobileLogo}>
-              <img src="/svg/logo.svg" alt="СМЫСЛ есть" />
+              <img src={header.logo} alt="СМЫСЛ есть" />
             </div>
           </Link>
         </div>
@@ -75,7 +81,7 @@ export default function Header() {
 
           <Link href="/">
             <div className={styles.desktopLogo}>
-              <img src="/svg/logo.svg" alt="СМЫСЛ есть" />
+              <img src={header.logo} alt="СМЫСЛ есть" />
             </div>
           </Link>
         </div>
@@ -96,35 +102,20 @@ export default function Header() {
             </button>
 
             <div className={styles.menuLogo}>
-              <img src="/svg/logo.svg" alt="СМЫСЛ есть" />
+              <img src={header.logo} alt="СМЫСЛ есть" />
             </div>
           </div>
 
           <nav className={styles.menuNav}>
-            <button
-              onClick={() => handleNavClick('products')}
-              className={styles.menuNavLink}
-            >
-              НАША ВЫПЕЧКА<br />И ДЕСЕРТЫ
-            </button>
-            <button
-              onClick={() => handleNavClick('about')}
-              className={styles.menuNavLink}
-            >
-              О НАС
-            </button>
-            <button
-              onClick={() => handleNavClick('news')}
-              className={styles.menuNavLink}
-            >
-              НОВОСТИ
-            </button>
-            <button
-              onClick={() => handleNavClick('contacts')}
-              className={styles.menuNavLink}
-            >
-              КОНТАКТЫ
-            </button>
+            {header.menu.map((item) => (
+              <button
+                key={item.href}
+                onClick={() => handleNavClick(item.href)}
+                className={styles.menuNavLink}
+              >
+                {item.label}
+              </button>
+            ))}
           </nav>
 
           <div className={styles.menuFooter}>

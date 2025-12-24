@@ -238,7 +238,7 @@ export default function NewsSection() {
                         alt={item.title}
                         fill
                         className="object-cover"
-                        priority={item.id === 1}
+                        priority={item.id === "1"}
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       />
                     </div>

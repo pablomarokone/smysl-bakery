@@ -2,9 +2,11 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useRef } from "react";
+import { getAboutData } from '../../lib/aboutData';
 
 export default function AboutSection() {
   const waveSvgRef = useRef<SVGElement>(null);
+  const about = getAboutData();
 
   useEffect(() => {
     const observerOptions = {
@@ -19,9 +21,7 @@ export default function AboutSection() {
         }
       });
     }, observerOptions);
-    
     document.querySelectorAll('.fade-in-scroll').forEach(el => observer.observe(el));
-    
     return () => {
       observer.disconnect();
     };
@@ -36,7 +36,6 @@ export default function AboutSection() {
         waveSvgRef.current.style.transform = `translateY(${offset}px)`;
       }
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -85,9 +84,7 @@ export default function AboutSection() {
         `}</style>
         <div className="text-center mb-8 relative z-10">
           <h2 className="text-5xl md:text-8xl font-bold text-white mb-4 fade-up">
-            СМЫСЛ
-            <br />
-            <span className="great-vibes italic text-5xl md:text-8xl fade-up delay">есть</span>
+            {about.title}
           </h2>
         </div>
 
@@ -102,13 +99,12 @@ export default function AboutSection() {
 
             {/* Фото девушки - одинаковая ширина со всеми */}
             <div className="relative rounded-3xl overflow-hidden w-full mx-auto max-w-full aspect-[3/4]">
-              <Image src="/img/staf1.png" alt="Сотрудник" fill className="object-contain" />
+              <Image src={about.image} alt="О нас" fill className="object-contain" />
             </div>
 
             {/* Текстовый блок "гордимся своим делом" */}
             <div className="bg-beige rounded-3xl p-5">
-              <h3 className="text-4xl md:text-6xl font-bold text-white italic great-vibes mb-4">гордимся своим делом</h3>
-              <p className="text-white text-lg leading-tight">Благодаря нашей страсти к инновациям и строгому контролю качества, мы создаём натуральные продукты, которые наполняют жизнь вкусом</p>
+              <p className="text-white text-lg leading-tight">{about.text}</p>
             </div>
 
             {/* Фото staf2 */}

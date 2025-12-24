@@ -1,18 +1,9 @@
-        <div className="rounded-2xl overflow-hidden mt-8" style={{ height: '400px' }}>
-          <iframe
-            src="https://yandex.ru/map-widget/v1/?um=constructor%3Aa1b0899bfd294471a0bb5d91ac1e5b3c1c68111a48c26b2d2cdad140c84908ff&amp;source=constructor"
-            width="100%"
-            height="400"
-            frameBorder="0"
-            style={{ border: 0, width: '100%', height: '400px' }}
-            allowFullScreen={true}
-            title="Карта Яндекса"
-          ></iframe>
-        </div>
 import { FaInstagram, FaVk, FaTelegramPlane, FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 import Image from "./Image";
+import { getFooterData } from '../../lib/footerData';
 
 export default function Footer() {
+  const footer = getFooterData();
   return (
     <footer id="contacts" className="w-full py-16" style={{ backgroundColor: '#544a44' }}>
       <div className="max-w-7xl mx-auto px-4">
@@ -108,9 +99,6 @@ export default function Footer() {
           </div>
         </div>
 
-
-        {/* Карта Яндекса */}
-
         {/* Карта Яндекса */}
         <div className="rounded-2xl overflow-hidden mt-8" style={{ height: '400px' }}>
           <iframe
@@ -126,7 +114,12 @@ export default function Footer() {
 
         {/* Copyright */}
         <div className="text-center text-white opacity-70 pt-8 border-t" style={{ borderColor: 'rgba(255, 236, 198, 0.2)' }}>
-          © 2025 СМЫСЛ есть. Все права защищены.
+          {footer.text}
+          <div className="flex justify-center gap-4 mt-2">
+            {footer.links.map((link: any) => (
+              <a key={link.href} href={link.href} className="underline hover:opacity-80 transition-colors">{link.label}</a>
+            ))}
+          </div>
         </div>
       </div>
     </footer>

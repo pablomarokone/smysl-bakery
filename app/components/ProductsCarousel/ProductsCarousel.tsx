@@ -1,10 +1,9 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import Image from "next/image";
 import { useSpring, animated } from '@react-spring/web';
 import { useDrag } from '@use-gesture/react';
-import { getProducts } from "@/lib/strapi";
 import styles from './ProductsCarousel.module.css';
 
 interface Product {
@@ -14,49 +13,77 @@ interface Product {
   description: string;
   ingredients: string;
   weight: string;
-  product_photo?: {
-    url: string;
-  };
+  price: string;
+  image: string;
 }
 
 export default function ProductsCarousel() {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products] = useState<Product[]>([
+    {
+      id: 1,
+      title: "Безглютеновый багет",
+      subtitle: "Французская классика",
+      description: "Хрустящий багет без глютена с хрустящей корочкой и нежным мякишем.",
+      ingredients: "Мука рисовая, вода, дрожжи, соль, оливковое масло",
+      weight: "350",
+      price: "450",
+      image: "baget.jpg"
+    },
+    {
+      id: 2,
+      title: "Карамельный круассан",
+      subtitle: "Слоёное наслаждение",
+      description: "Ароматный круассан с карамельной начинкой.",
+      ingredients: "Мука миндальная, масло сливочное, карамель, яйца",
+      weight: "120",
+      price: "320",
+      image: "croissant.jpg"
+    },
+    {
+      id: 3,
+      title: "Чиабатта с розмарином",
+      subtitle: "Итальянская традиция",
+      description: "Воздушная чиабатта с ароматом свежего розмарина.",
+      ingredients: "Мука кукурузная, розмарин, оливковое масло, дрожжи",
+      weight: "280",
+      price: "380",
+      image: "chiabatta.jpg"
+    },
+    {
+      id: 4,
+      title: "Безглютеновый бородинский",
+      subtitle: "Русский хлеб",
+      description: "Тёмный хлеб с тмином и кориандром.",
+      ingredients: "Мука гречневая, закваска, тмин, кориандр, патока",
+      weight: "500",
+      price: "520",
+      image: "borodinsky.jpg"
+    }
+  ]);
+  
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [mobileActiveIndex, setMobileActiveIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
-  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   
   const [{ x }, api] = useSpring(() => ({ x: 0 }));
-  
-  useEffect(() => {
-    async function loadProducts() {
-      try {
-        const data = await getProducts();
-        setProducts(data || []);
-      } catch (error) {
-        console.error("Ошибка загрузки:", error);
-        setProducts([]);
-      }
-    }
-    loadProducts();
-  }, []);
 
-  const nextProduct = () => {
+  // Навигация - оставляем ваш код
+  const nextProduct = useCallback(() => {
     if (isAnimating || !products.length) return;
     setIsAnimating(true);
     setCurrentIndex(prev => (prev + 1) % products.length);
     setTimeout(() => setIsAnimating(false), 400);
-  };
+  }, [isAnimating, products.length]);
 
-  const prevProduct = () => {
+  const prevProduct = useCallback(() => {
     if (isAnimating || !products.length) return;
     setIsAnimating(true);
     setCurrentIndex(prev => (prev - 1 + products.length) % products.length);
     setTimeout(() => setIsAnimating(false), 400);
-  };
+  }, [isAnimating, products.length]);
 
-  // Универсальный свайп для десктопа
+  // Драг для десктопа - оставляем ваш код
   const bindDrag = useDrag(({ active, movement: [mx], direction: [dx], velocity: [vx] }) => {
     if (!active && (Math.abs(mx) > 100 || vx > 0.5)) {
       if (dx > 0) prevProduct();
@@ -72,7 +99,12 @@ export default function ProductsCarousel() {
     from: () => [x.get(), 0]
   });
 
-  // Обработчик скролла для мобильной версии
+  // Функция для получения URL изображения
+  const getImageUrl = (imageName: string) => {
+    return `/img/${imageName}`;
+  };
+
+  // Мобильный скролл
   const handleMobileScroll = useCallback(() => {
     if (!containerRef.current || !products.length) return;
     
@@ -81,7 +113,6 @@ export default function ProductsCarousel() {
     const cardWidth = container.clientWidth * 0.85;
     const gap = 20;
     
-    // Рассчитываем текущий индекс с округлением
     const newIndex = Math.round(scrollLeft / (cardWidth + gap));
     
     if (newIndex >= 0 && newIndex < products.length && newIndex !== mobileActiveIndex) {
@@ -89,7 +120,7 @@ export default function ProductsCarousel() {
     }
   }, [products.length, mobileActiveIndex]);
 
-  // Прокрутка к карточке по индексу на мобилке
+  // Прокрутка на мобилке
   const scrollToMobileIndex = useCallback((index: number) => {
     if (!containerRef.current || !products.length) return;
     
@@ -97,19 +128,17 @@ export default function ProductsCarousel() {
     const cardWidth = container.clientWidth * 0.85;
     const gap = 20;
     
-    // Плавная прокрутка
     container.scrollTo({
       left: index * (cardWidth + gap),
       behavior: 'smooth'
     });
     
-    // Устанавливаем активный индекс после прокрутки
     setTimeout(() => {
       setMobileActiveIndex(index);
     }, 300);
   }, [products.length]);
 
-  // Десктопная навигация
+  // Навигация по индексу
   const goToIndex = (index: number) => {
     if (isAnimating || !products.length) return;
     setIsAnimating(true);
@@ -117,48 +146,31 @@ export default function ProductsCarousel() {
     setTimeout(() => setIsAnimating(false), 400);
   };
 
-  // Устанавливаем обработчик скролла
   useEffect(() => {
     const container = containerRef.current;
     if (container) {
       container.addEventListener('scroll', handleMobileScroll);
-      return () => {
-        container.removeEventListener('scroll', handleMobileScroll);
-        if (scrollTimeoutRef.current) {
-          clearTimeout(scrollTimeoutRef.current);
-        }
-      };
+      return () => container.removeEventListener('scroll', handleMobileScroll);
     }
   }, [handleMobileScroll]);
-
-  // Авто-определение активной карточки при монтировании
-  useEffect(() => {
-    if (containerRef.current && products.length > 0) {
-      handleMobileScroll();
-    }
-  }, [products, handleMobileScroll]);
-
-  if (!products.length) return <div>Загрузка...</div>;
 
   return (
     <section id="products" className="w-full py-12 bg-primary">
       <div className="max-w-7xl mx-auto px-6 relative">
-        
-        {/* СТРЕЛКИ С ИНВЕРСИЕЙ - БЛИЖЕ К КРАЯМ (только для десктопа) */}
+        {/* Навигация */}
         <div className="hidden md:block">
           <button
             onClick={prevProduct}
             className={`${styles.navButton} ${styles.navButtonPrev}`}
             aria-label="Предыдущий"
           >
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
               <path 
                 d="M14 6L8 12L14 18" 
                 stroke="#7BA862" 
                 strokeWidth="2.5" 
                 strokeLinecap="round" 
                 strokeLinejoin="round"
-                className={styles.navArrow}
               />
             </svg>
           </button>
@@ -168,63 +180,83 @@ export default function ProductsCarousel() {
             className={`${styles.navButton} ${styles.navButtonNext}`}
             aria-label="Следующий"
           >
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
               <path 
                 d="M10 6L16 12L10 18" 
                 stroke="#7BA862" 
                 strokeWidth="2.5" 
                 strokeLinecap="round" 
                 strokeLinejoin="round"
-                className={styles.navArrow}
               />
             </svg>
           </button>
         </div>
 
-        {/* ЕДИНЫЙ КОНТЕЙНЕР ДЛЯ ВСЕХ УСТРОЙСТВ */}
+        {/* Карусель */}
         <div className={styles.carouselWithBackground}>
           <div className={styles.carouselBackground} />
           
-          {/* АНИМИРОВАННЫЙ КОНТЕЙНЕР ДЛЯ ДЕСКТОПА */}
-          <animated.div 
+          {/* ДЕСКТОП - ИСПРАВЛЕННЫЙ КОД */}
+          <animated.div
             {...bindDrag()}
-            style={{ x, touchAction: 'pan-y' }}
-            className="hidden md:flex items-center justify-center gap-4 relative overflow-visible cursor-grab active:cursor-grabbing z-10"
+            style={{ 
+              x, 
+              touchAction: 'pan-y',
+              // Добавляем центрирование
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '100%'
+            }}
+            className="hidden md:flex relative overflow-visible cursor-grab active:cursor-grabbing z-10"
           >
-            {[ -2, -1, 0, 1, 2 ].map((offset) => {
+            {/* Ключевое изменение: используем [-2, -1, 0, 1, 2] без лишней логики */}
+            {[-2, -1, 0, 1, 2].map((offset) => {
               const index = (currentIndex + offset + products.length) % products.length;
               const product = products[index];
-              let scale = 1, opacity = 1;
-              
-              if (offset === 0) { scale = 1; opacity = 1; }
-              else if (Math.abs(offset) === 1) { scale = 0.85; opacity = 0.5; }
-              else { scale = 0.75; opacity = 0.3; }
-              
+              const uniqueKey = `${product.id}-${offset}`;
+              // Настройки масштаба и прозрачности
+              let scale = 1, opacity = 1, zIndex = 10;
+              if (offset === 0) { 
+                scale = 1; 
+                opacity = 1; 
+                zIndex = 30; 
+              } else if (Math.abs(offset) === 1) { 
+                scale = 0.85; 
+                opacity = 0.5; 
+                zIndex = 20; 
+              } else { 
+                scale = 0.75; 
+                opacity = 0.3; 
+                zIndex = 10; 
+              }
               // ЦЕНТРАЛЬНАЯ КАРТОЧКА
               if (offset === 0) {
                 return (
-                  <div key={product.id} className={`${styles.activeCard} ${isAnimating ? styles.animating : styles.notAnimating}`}>
+                  <div 
+                    key={uniqueKey}
+                    className={`${styles.activeCard} ${isAnimating ? styles.animating : styles.notAnimating}`}
+                    style={{ 
+                      zIndex,
+                      // Центрируем активную карточку
+                      position: 'relative',
+                      margin: '0 20px' // Отступы для центрирования
+                    }}
+                  >
                     <div className={styles.activeCardInner}>
-                      
-                      {/* ФОТО */}
+                      {/* Фото */}
                       <div className={styles.activeImageContainer}>
-                        {product.product_photo?.url ? (
-                          <Image
-                            src={`http://localhost:1337${product.product_photo.url}`}
-                            alt={product.title}
-                            fill
-                            className={styles.activeImage}
-                            sizes="432px"
-                            priority
-                          />
-                        ) : (
-                          <div className={styles.noImagePlaceholder}>
-                            <span>Нет фото</span>
-                          </div>
-                        )}
+                        <Image
+                          src={getImageUrl(product.image)}
+                          alt={product.title}
+                          fill
+                          className={styles.activeImage}
+                          sizes="432px"
+                          priority
+                        />
                       </div>
                       
-                      {/* ИКОНКА */}
+                      {/* Иконка */}
                       <div className={styles.glutenFreeIcon}>
                         <Image
                           src="/svg/gl_free.svg"
@@ -234,28 +266,25 @@ export default function ProductsCarousel() {
                         />
                       </div>
                       
-                      {/* КОНТЕНТ */}
+                      {/* Контент */}
                       <div className={styles.cardContent}>
                         <div className={styles.productHeader}>
                           <h3 className={styles.productTitle}>{product.title}</h3>
                           <div className={styles.productWeight}>
-                            {product.weight ? `${product.weight}г` : '0г'}
+                            {product.weight}г
                           </div>
                         </div>
                         
-                        <p className={styles.productSubtitle}>
-                          {product.subtitle || 'Безглютеновый аналог'}
-                        </p>
-                        
-                        <p className={styles.productDescription}>
-                          {product.description || ''}
-                        </p>
+                        <p className={styles.productSubtitle}>{product.subtitle}</p>
+                        <p className={styles.productDescription}>{product.description}</p>
                         
                         <div className={styles.ingredients}>
                           <h4 className={styles.ingredientsTitle}>Состав:</h4>
-                          <p className={styles.ingredientsText}>
-                            {product.ingredients || 'Состав не указан'}
-                          </p>
+                          <p className={styles.ingredientsText}>{product.ingredients}</p>
+                        </div>
+                        
+                        <div className="mt-4 text-2xl font-bold text-[#544a44]">
+                          {product.price} ₽
                         </div>
                       </div>
                     </div>
@@ -263,58 +292,61 @@ export default function ProductsCarousel() {
                 );
               } 
               
-              // БОКОВЫЕ ФОТО (только для десктопа)
+              // БОКОВЫЕ КАРТОЧКИ
               else {
                 const imgWidth = Math.abs(offset) === 2 ? 180 : 260;
                 const imgHeight = Math.abs(offset) === 2 ? 140 : 220;
-                const marginTop = Math.abs(offset) === 1 ? '40px' : '60px';
                 
                 return (
-                  <div 
-                    key={product.id} 
-                    className={`${styles.desktopOnly} relative ${Math.abs(offset) === 1 ? 'w-[280px]' : 'w-[240px]'} z-10 transition-all duration-500 flex items-center justify-center`}
-                    style={{ transform: `scale(${scale})`, opacity, marginTop }}
+                  <div
+                    key={uniqueKey}
+                    className={`${styles.desktopOnly} relative z-10 transition-all duration-500`}
+                    style={{ 
+                      zIndex,
+                      transform: `scale(${scale})`, 
+                      opacity,
+                      // Выравниваем боковые карточки по центру
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      margin: '0 10px', // Уменьшаем отступы
+                      // Смещаем вверх для эффекта перспективы
+                      marginTop: Math.abs(offset) === 1 ? '30px' : '40px'
+                    }}
                   >
-                    {product.product_photo?.url && (
-                      <Image
-                        src={`http://localhost:1337${product.product_photo.url}`}
-                        alt={product.title}
-                        width={imgWidth}
-                        height={imgHeight}
-                        className="object-contain drop-shadow-xl"
-                      />
-                    )}
+                    <Image
+                      src={getImageUrl(product.image)}
+                      alt={product.title}
+                      width={imgWidth}
+                      height={imgHeight}
+                      className="object-contain drop-shadow-xl"
+                    />
                   </div>
                 );
               }
             })}
           </animated.div>
           
-          {/* МОБИЛЬНЫЙ КОНТЕЙНЕР С ГОРИЗОНТАЛЬНЫМ СКРОЛЛОМ */}
+          {/* Мобильная версия - БЕЗ ИЗМЕНЕНИЙ */}
           <div 
             ref={containerRef}
             className={`${styles.scrollSnapContainer} md:hidden`}
           >
-            {products.map((product, index) => (
+            {products.map((product) => (
               <div key={product.id} className={styles.scrollSnapCard}>
                 <div className={styles.mobileCard}>
-                  
-                  {/* ФОТО - УВЕЛИЧЕННОЕ НА 10% */}
+                  {/* Фото */}
                   <div className={styles.mobileImageWrapper}>
-                    {product.product_photo?.url ? (
-                      <Image
-                        src={`http://localhost:1337${product.product_photo.url}`}
-                        alt={product.title}
-                        width={308}
-                        height={220}
-                        className={styles.mobileImage}
-                      />
-                    ) : (
-                      <div className={styles.mobileNoImage}>Нет фото</div>
-                    )}
+                    <Image
+                      src={getImageUrl(product.image)}
+                      alt={product.title}
+                      width={308}
+                      height={220}
+                      className={styles.mobileImage}
+                    />
                   </div>
                   
-                  {/* ИКОНКА */}
+                  {/* Иконка */}
                   <div className={styles.mobileIcon}>
                     <Image
                       src="/svg/gl_free.svg"
@@ -325,28 +357,23 @@ export default function ProductsCarousel() {
                     />
                   </div>
                   
-                  {/* КОНТЕНТ */}
+                  {/* Контент */}
                   <div className={styles.mobileContent}>
                     <div className={styles.mobileHeader}>
                       <h3 className={styles.mobileTitle}>{product.title}</h3>
-                      <div className={styles.mobileWeight}>
-                        {product.weight ? `${product.weight}г` : '0г'}
-                      </div>
+                      <div className={styles.mobileWeight}>{product.weight}г</div>
                     </div>
                     
-                    <p className={styles.mobileSubtitle}>
-                      {product.subtitle || 'Безглютеновый аналог'}
-                    </p>
-                    
-                    <p className={styles.mobileDescription}>
-                      {product.description || ''}
-                    </p>
+                    <p className={styles.mobileSubtitle}>{product.subtitle}</p>
+                    <p className={styles.mobileDescription}>{product.description}</p>
                     
                     <div className={styles.mobileIngredients}>
                       <h4 className={styles.mobileIngredientsTitle}>Состав:</h4>
-                      <p className={styles.mobileIngredientsText}>
-                        {product.ingredients || 'Состав не указан'}
-                      </p>
+                      <p className={styles.mobileIngredientsText}>{product.ingredients}</p>
+                    </div>
+                    
+                    <div className="mt-3 text-xl font-bold text-[#544a44]">
+                      {product.price} ₽
                     </div>
                   </div>
                 </div> 
@@ -355,11 +382,11 @@ export default function ProductsCarousel() {
           </div>
         </div>
         
-        {/* ОБЩИЕ ДОТСЫ ДЛЯ ВСЕХ УСТРОЙСТВ */}
+        {/* Индикаторы */}
         <div className="flex justify-center gap-2 mt-8">
           {products.map((_, index) => {
-            // Определяем активный индекс в зависимости от устройства
-            const isActive = window.innerWidth < 768 
+            const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+            const isActive = isMobile 
               ? mobileActiveIndex === index 
               : currentIndex === index;
             
@@ -367,7 +394,7 @@ export default function ProductsCarousel() {
               <button
                 key={index}
                 onClick={() => {
-                  if (window.innerWidth < 768) {
+                  if (isMobile) {
                     scrollToMobileIndex(index);
                   } else {
                     goToIndex(index);
@@ -378,7 +405,7 @@ export default function ProductsCarousel() {
                     ? 'bg-[#fdebc1] scale-110'
                     : 'bg-[#fdebc1] opacity-40 hover:opacity-70'
                 }`}
-                aria-label={`Перейти к продукту ${index + 1}`}
+                aria-label={`Продукт ${index + 1}`}
               />
             );
           })}

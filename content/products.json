@@ -1,0 +1,24 @@
+[
+  {
+    "id": "1",
+    "title": "Хлеб без глютена",
+    "subtitle": "Безглютеновый хлеб для здоровья",
+    "description": "Нежный, ароматный, полезный хлеб для всей семьи.",
+    "ingredients": "Рисовая мука, вода, дрожжи, соль",
+    "weight": "500",
+    "image": "/img/product1.jpg",
+    "product_photo": { "url": "/img/product1.jpg" },
+    "price": "350"
+  },
+  {
+    "id": "2",
+    "title": "Десерт с ягодами",
+    "subtitle": "Лёгкий ягодный десерт",
+    "description": "Лёгкий десерт с натуральными ягодами и миндальной мукой.",
+    "ingredients": "Ягоды, миндальная мука, сахар, яйца",
+    "weight": "120",
+    "image": "/img/product2.jpg",
+    "product_photo": { "url": "/img/product2.jpg" },
+    "price": "250"
+  }
+]

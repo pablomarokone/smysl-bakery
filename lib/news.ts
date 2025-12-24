@@ -1,30 +1,8 @@
+
 export type NewsItem = {
   id: string;
-  title: string;
   date: string;
-  excerpt: string;
-  image: string;
-  fullContent: string;
-};
-
-const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL || 'http://localhost:1337';
-
-function mapStrapiNews(item: any): NewsItem {
-  return {
-    id: String(item.id),
-    title: item.attributes.title,
-    date: item.attributes.date,
-    excerpt: item.attributes.excerpt || '',
-    image: item.attributes.image?.data?.attributes?.url
-      ? STRAPI_URL.replace(/\/$/, '') + item.attributes.image.data.attributes.url
-      : '',
-    fullContent: item.attributes.fullContent || '',
-  };
-}
-export type NewsItem = {
-  id: string;
   title: string;
-  date: string;
   excerpt: string;
   image: string;
   fullContent: string;
@@ -81,24 +59,17 @@ export const newsData: NewsItem[] = [
   },
 ];
 
+
 export async function getNews(): Promise<NewsItem[]> {
-  const res = await fetch(`${STRAPI_URL}/api/news?populate=image`);
-  if (!res.ok) return [];
-  const data = await res.json();
-  return (data.data || []).map(mapStrapiNews);
+  return newsData;
 }
+
 
 export async function getNewsById(id: string): Promise<NewsItem | null> {
-  const res = await fetch(`${STRAPI_URL}/api/news/${id}?populate=image`);
-  if (!res.ok) return null;
-  const data = await res.json();
-  if (!data.data) return null;
-  return mapStrapiNews(data.data);
+  return newsData.find((item) => item.id === id) || null;
 }
 
+
 export async function getNewsSlugs(): Promise<string[]> {
-  const res = await fetch(`${STRAPI_URL}/api/news`);
-  if (!res.ok) return [];
-  const data = await res.json();
-  return (data.data || []).map((item: any) => String(item.id));
+  return newsData.map((item) => item.id);
 }

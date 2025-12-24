@@ -4,13 +4,13 @@ import Link from "next/link";
 import Image from "next/image";
 import styles from "./HeroSection.module.css";
 import { useEffect, useState } from "react";
-
+import { getHeroData } from '../../lib/heroData';
 export default function HeroSection() {
   const [waveScrolled, setWaveScrolled] = useState(false);
+  const hero = getHeroData();
 
   useEffect(() => {
     const onScroll = () => {
-      // Можно скорректировать порог по желанию
       setWaveScrolled(window.scrollY > 60);
     };
     window.addEventListener("scroll", onScroll);
@@ -18,7 +18,7 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section className={styles.hero} id="hero">
+    <section className={styles.hero} id="hero" style={{ backgroundImage: `url(${hero.backgroundImage})` }}>
       {/* Декоративные хлеба на фоне */}
       <div className={styles.waveBg} aria-hidden="true">
         <img
@@ -73,13 +73,10 @@ export default function HeroSection() {
           </div>
 
           <div className={styles.mobileTextContainer}>
-            <h1 className={styles.title}>
-              Безглютеновая<br />
-              пекарня<br />
-              в Москве
-            </h1>
-            <Link href="#products" className={styles.button}>
-              Каталог продукции
+            <h1 className={styles.title}>{hero.title}</h1>
+            <div className={styles.subtitle}>{hero.subtitle}</div>
+            <Link href={hero.ctaLink} className={styles.button}>
+              {hero.ctaText}
             </Link>
           </div>
         </div>
@@ -87,13 +84,10 @@ export default function HeroSection() {
         {/* ДЕСКТОПНАЯ ВЕРСИЯ */}
         <div className={styles.desktopLayout}>
           <div className={styles.textContainer}>
-            <h1 className={styles.title}>
-              Безглютеновая<br />
-              пекарня<br />
-              в Москве
-            </h1>
-            <Link href="#products" className={styles.button}>
-              Каталог продукции
+            <h1 className={styles.title}>{hero.title}</h1>
+            <div className={styles.subtitle}>{hero.subtitle}</div>
+            <Link href={hero.ctaLink} className={styles.button}>
+              {hero.ctaText}
             </Link>
           </div>
 
