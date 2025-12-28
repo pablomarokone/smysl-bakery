@@ -6,7 +6,7 @@ import Image from "next/image";
 export default function HeartSection() {
   const [scale, setScale] = useState(1);
   const [isClient, setIsClient] = useState(false);
-  const sectionRef = useRef(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
       setIsClient(true);
