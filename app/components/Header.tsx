@@ -203,13 +203,6 @@ export default function Header() {
               <div className={styles.phone}>{header.phone ? header.phone : "Телефон не указан"}</div>
               <div className={styles.email}>{header.email ? header.email : "Email не указан"}</div>
             </div>
-              <a href="tel:+78002002222" className={styles.phone}>
-                8 800 200 22 22
-              </a>
-              <a href="mailto:info@smysl-est.ru" className={styles.email}>
-                info@smysl-est.ru
-              </a>
-            </div>
           </div>
         </div>
       </div>
