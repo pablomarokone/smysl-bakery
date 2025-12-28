@@ -77,7 +77,7 @@ export default function Header() {
 
           <Link href="/">
             <div className={styles.mobileLogo}>
-              {header.logo ? (
+              {header.logo && header.logo.url ? (
                 <Image src={header.logo.url} alt="СМЫСЛ есть" width={120} height={60} priority />
               ) : (
                 <Image src="/img/logo.png" alt="СМЫСЛ есть" width={120} height={60} priority />
@@ -111,7 +111,7 @@ export default function Header() {
 
           <Link href="/">
             <div className={styles.desktopLogo}>
-              {header.logo ? (
+              {header.logo && header.logo.url ? (
                 <Image src={header.logo.url} alt="СМЫСЛ есть" width={120} height={60} priority />
               ) : (
                 <Image src="/img/logo.png" alt="СМЫСЛ есть" width={120} height={60} priority />
@@ -136,7 +136,7 @@ export default function Header() {
             </button>
 
             <div className={styles.menuLogo}>
-              {header.logo ? (
+              {header.logo && header.logo.url ? (
                 <Image src={header.logo.url} alt="СМЫСЛ есть" width={120} height={60} priority />
               ) : (
                 <Image src="/img/logo.png" alt="СМЫСЛ есть" width={120} height={60} priority />
@@ -145,39 +145,64 @@ export default function Header() {
           </div>
 
           <nav className={styles.menuNav}>
-            {Array.isArray(header.menu) && header.menu.map((item) => (
-              <button
-                key={item.href}
-                onClick={() => handleNavClick(item.href)}
-                className={styles.menuNavLink}
-              >
-                {item.label}
-              </button>
-            ))}
+            {Array.isArray(header.menu) && header.menu.length > 0 ? (
+              header.menu.map((item) => (
+                <button
+                  key={item.href}
+                  onClick={() => handleNavClick(item.href)}
+                  className={styles.menuNavLink}
+                >
+                  {item.label}
+                </button>
+              ))
+            ) : (
+              <div className={styles.menuNavEmpty}>Меню не найдено</div>
+            )}
           </nav>
 
           <div className={styles.menuFooter}>
             <div className={styles.socialIcons}>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className={styles.socialIcon}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}>
-                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" strokeWidth={2.5} />
-                </svg>
-              </a>
-              <a href="https://vk.com" target="_blank" rel="noopener noreferrer" className={styles.socialIcon}>
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12.785 16.241s.288-.032.436-.193c.136-.148.132-.425.132-.425s-.02-1.297.572-1.488c.583-.188 1.333 1.254 2.127 1.809.6.42 1.056.328 1.056.328l2.123-.03s1.11-.07.584-.957c-.043-.073-.308-.66-1.583-1.865-1.336-1.262-1.157-1.059.452-3.246.98-1.332 1.372-2.145 1.25-2.495-.117-.334-.84-.245-.84-.245l-2.388.015s-.177-.025-.308.056c-.127.078-.21.262-.21.262s-.375 1.02-.875 1.887c-1.055 1.829-1.478 1.926-1.65 1.812-.4-.267-.3-1.073-.3-1.645 0-1.788.266-2.532-.518-2.724-.261-.064-.453-.106-1.12-.113-.857-.009-1.583.003-1.994.208-.274.137-.485.442-.356.46.159.021.52.099.711.365.247.343.238 1.114.238 1.114s.142 2.104-.331 2.365c-.325.179-.77-.186-1.726-1.854-.49-.843-.86-1.775-.86-1.775s-.071-.178-.199-.273c-.155-.115-.372-.152-.372-.152l-2.268.015s-.341.01-.466.161c-.112.134-.009.411-.009.411s1.763 4.199 3.757 6.316c1.827 1.942 3.9 1.814 3.9 1.814h.943z"/>
-                </svg>
-              </a>
-              <a href="https://t.me" target="_blank" rel="noopener noreferrer" className={styles.socialIcon}>
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
-                </svg>
-              </a>
+              {header.social_instagram_icon ? (
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className={styles.socialIcon}>
+                  <Image src={header.social_instagram_icon.url} alt="Instagram" width={24} height={24} />
+                </a>
+              ) : (
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className={styles.socialIcon}>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}>
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" strokeWidth={2.5} />
+                  </svg>
+                </a>
+              )}
+              {header.social_vk_icon ? (
+                <a href="https://vk.com" target="_blank" rel="noopener noreferrer" className={styles.socialIcon}>
+                  <Image src={header.social_vk_icon.url} alt="VK" width={24} height={24} />
+                </a>
+              ) : (
+                <a href="https://vk.com" target="_blank" rel="noopener noreferrer" className={styles.socialIcon}>
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12.785 16.241s.288-.032.436-.193c.136-.148.132-.425.132-.425s-.02-1.297.572-1.488c.583-.188 1.333 1.254 2.127 1.809.6.42 1.056.328 1.056.328l2.123-.03s1.11-.07.584-.957c-.043-.073-.308-.66-1.583-1.865-1.336-1.262-1.157-1.059.452-3.246.98-1.332 1.372-2.145 1.25-2.495-.117-.334-.84-.245-.84-.245l-2.388.015s-.177-.025-.308.056c-.127.078-.21.262-.21.262s-.375 1.02-.875 1.887c-1.055 1.829-1.478 1.926-1.65 1.812-.4-.267-.3-1.073-.3-1.645 0-1.788.266-2.532-.518-2.724-.261-.064-.453-.106-1.12-.113-.857-.009-1.583.003-1.994.208-.274.137-.485.442-.356.46.159.021.52.099.711.365.247.343.238 1.114.238 1.114s.142 2.104-.331 2.365c-.325.179-.77-.186-1.726-1.854-.49-.843-.86-1.775-.86-1.775s-.071-.178-.199-.273c-.155-.115-.372-.152-.372-.152l-2.268.015s-.341.01-.466.161c-.112.134-.009.411-.009.411s1.763 4.199 3.757 6.316c1.827 1.942 3.9 1.814 3.9 1.814h.943z"/>
+                  </svg>
+                </a>
+              )}
+              {header.social_telegram_icon ? (
+                <a href="https://t.me" target="_blank" rel="noopener noreferrer" className={styles.socialIcon}>
+                  <Image src={header.social_telegram_icon.url} alt="Telegram" width={24} height={24} />
+                </a>
+              ) : (
+                <a href="https://t.me" target="_blank" rel="noopener noreferrer" className={styles.socialIcon}>
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+                  </svg>
+                </a>
+              )}
             </div>
 
             <div className={styles.contacts}>
+              <div className={styles.phone}>{header.phone ? header.phone : "Телефон не указан"}</div>
+              <div className={styles.email}>{header.email ? header.email : "Email не указан"}</div>
+            </div>
               <a href="tel:+78002002222" className={styles.phone}>
                 8 800 200 22 22
               </a>
