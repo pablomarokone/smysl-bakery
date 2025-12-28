@@ -8,17 +8,21 @@ import { getHeroData } from '../../lib/heroData';
 
 export default function HeroSection() {
   const [waveScrolled, setWaveScrolled] = useState(false);
-  const hero = getHeroData();
+  const [hero, setHero] = useState<any>(null);
+
+  useEffect(() => {
+    getHeroData().then(setHero);
+  }, []);
 
   useEffect(() => {
     const onScroll = () => {
       setWaveScrolled(window.scrollY > 60);
     };
-    
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  if (!hero) return null;
   return (
     <section 
       className={styles.hero} 

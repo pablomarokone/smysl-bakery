@@ -1,4 +1,5 @@
-import headerData from '../app/content/header.json';
+
+import { getCollectionFromDirectus } from './directus';
 
 export type HeaderMenuItem = {
   label: string;
@@ -12,6 +13,10 @@ export type HeaderData = {
   address: string;
 };
 
-export function getHeaderData(): HeaderData {
-  return headerData as HeaderData;
+export async function getHeaderData(): Promise<HeaderData> {
+  const data = await getCollectionFromDirectus('header');
+  if (Array.isArray(data) && data.length > 0) {
+    return data[0] as HeaderData;
+  }
+  return data as HeaderData;
 }

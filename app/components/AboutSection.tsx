@@ -1,12 +1,16 @@
 
 "use client";
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getAboutData } from '../../lib/aboutData';
 
 export default function AboutSection() {
   const waveSvgRef = useRef<SVGElement>(null);
-  const about = getAboutData();
+  const [about, setAbout] = useState<any>(null);
+
+  useEffect(() => {
+    getAboutData().then(setAbout);
+  }, []);
 
   useEffect(() => {
     const observerOptions = {
@@ -40,6 +44,7 @@ export default function AboutSection() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  if (!about) return null;
   return (
     <section id="about" className="w-full py-16 bg-primary relative overflow-visible">
       {/* Полупрозрачный слой узоров */}
@@ -53,7 +58,7 @@ export default function AboutSection() {
           style={{ objectFit: 'fill' }}
           draggable={false}
         />
-      </div>
+
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Заголовок с анимацией */}
@@ -107,58 +112,7 @@ export default function AboutSection() {
               <p className="text-white text-lg leading-tight">{about.text}</p>
             </div>
 
-            {/* Фото staf2 */}
-            <div className="relative rounded-3xl overflow-hidden w-full mx-auto max-w-full h-[300px]">
-              <Image src="/img/staf2.png" alt="Сотрудник" fill className="object-contain" />
-            </div>
 
-            {/* Текстовый блок "гордимся" */}
-            <div className="bg-beige rounded-3xl p-5">
-              <p className="text-4xl md:text-6xl font-bold text-white italic great-vibes mb-2">гордимся</p>
-              <p className="text-white text-lg leading-tight">Мы с гордостью предлагаем широкий ассортимент вкусной и натуральной выпечки на безглютеновой основе</p>
-            </div>
-
-            {/* Фото staf3 - одинаковая ширина со всеми */}
-            <div className="relative rounded-3xl overflow-hidden w-full mx-auto max-w-full aspect-[3/4]">
-              <Image src="/img/staf3.png" alt="Сотрудник" fill className="object-contain" />
-            </div>
-
-            {/* Текстовый блок "наша миссия" */}
-            <div className="bg-beige rounded-3xl p-5">
-              <p className="text-4xl md:text-6xl font-bold text-white italic great-vibes mb-2">наша миссия</p>
-              <p className="text-white text-lg leading-tight">Мы стремимся к тому, чтобы питание стало ОСОЗНАННЫМ, понятным и по-настоящему вкусным - без компромиссов между вкусом и пользой</p>
-            </div>
-
-            {/* Фото staf5 - одинаковая ширина со всеми */}
-            <div className="relative rounded-3xl overflow-hidden w-full mx-auto max-w-full h-[250px]">
-              <Image src="/img/staf5.png" alt="Сотрудник" fill className="object-contain" />
-            </div>
-          </div>
-
-          {/* Десктопная версия - как в макете */}
-          <div className="hidden md:flex gap-4 items-end">
-            {/* Левая колонка - staf2 и staf4 */}
-            <div className="w-1/3 flex flex-col gap-4">
-              <div className="relative rounded-3xl overflow-hidden fade-in-scroll w-full aspect-[3/4]">
-                <Image src="/img/staf2.png" alt="Сотрудник" fill className="object-contain" />
-              </div>
-              <div className="relative rounded-3xl overflow-hidden fade-in-scroll w-full aspect-[3/4]">
-                <Image src="/img/staf4.png" alt="Сотрудник" fill className="object-contain" />
-              </div>
-            </div>
-
-            {/* Центральная колонка - staf1, текстовый блок и staf5 */}
-            <div className="w-1/3 flex flex-col gap-0">
-              <div className="relative rounded-3xl overflow-hidden fade-in-scroll w-full aspect-[3/4]">
-                <Image src="/img/staf1.png" alt="Сотрудник" fill className="object-contain object-top" />
-              </div>
-              <div className="bg-beige rounded-3xl p-4 pb-3 flex flex-col justify-center fade-in-scroll">
-                <p className="font-bold text-white italic great-vibes text-4xl mb-1">гордимся</p>
-                <p className="text-white text-lg leading-tight">Мы с гордостью предлагаем широкий ассортимент вкусной и натуральной выпечки на безглютеновой основе</p>
-              </div>
-              <div className="relative rounded-3xl overflow-hidden fade-in-scroll w-full aspect-[3/4]">
-                <Image src="/img/staf5.png" alt="Сотрудник" fill className="object-contain" />
-              </div>
             </div>
 
             {/* Правая колонка - текстовые блоки */}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
+import { getProductsData } from '../../../lib/productsData';
 import Image from "next/image";
 import { useSpring, animated } from '@react-spring/web';
 import { useDrag } from '@use-gesture/react';
@@ -22,19 +23,12 @@ export default function ProductsCarousel() {
   const DIRECTUS_URL = process.env.NEXT_PUBLIC_DIRECTUS_URL || "http://localhost:8055";
 
   useEffect(() => {
-    async function fetchProducts() {
-      try {
-        const res = await fetch(`${DIRECTUS_URL}/items/products?fields=id,title,subtitle,description,ingredients,weight,product_photo`);
-        const data = await res.json();
-        setProducts(data.data || []);
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error("Ошибка загрузки продуктов:", e);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchProducts();
+    getProductsData().then(data => {
+      setProducts(data || []);
+    }).catch(e => {
+      // eslint-disable-next-line no-console
+      console.error("Ошибка загрузки продуктов:", e);
+    }).finally(() => setLoading(false));
   }, []);
 
   // Получение URL изображения Directus

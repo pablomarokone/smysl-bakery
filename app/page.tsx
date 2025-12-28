@@ -2,10 +2,10 @@ import Header from "./components/Header";
 import HeroSection from "./components/HeroSection";
 import ScrollingIcons from "./components/ScrollingIcons";
 import ProductsSection from "./components/ProductsSection";
-import AboutSection from "./components/AboutSection";
+import AboutSectionClient from "./components/AboutSectionClient";
 import NewsSection from "./components/NewsSection";
 import HeartSection from "./components/HeartSection";
-import Footer from "./components/Footer";
+import FooterClient from "./components/FooterClient";
 
 export default function Home() {
   return (
@@ -15,11 +15,11 @@ export default function Home() {
         <HeroSection />
         <ScrollingIcons />
         <ProductsSection />
-        <AboutSection />
+        <AboutSectionClient />
         <NewsSection />
         <HeartSection />
       </main>
-      <Footer />
+      <FooterClient />
     </>
   );
 }

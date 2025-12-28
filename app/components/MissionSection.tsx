@@ -1,7 +1,17 @@
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { getMissionData } from '../../lib/missionData';
 
-  const mission = getMissionData();
+
+export default function MissionSection() {
+  const [mission, setMission] = useState<any>(null);
+
+  useEffect(() => {
+    getMissionData().then(setMission);
+  }, []);
+
+  if (!mission) return null;
   return (
     <section className="py-20 bg-white relative overflow-hidden">
       <div className="container mx-auto px-4 relative z-10">

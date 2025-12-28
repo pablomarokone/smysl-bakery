@@ -1,4 +1,5 @@
-import products from '../content/products.json';
+
+import { getCollectionFromDirectus } from './directus';
 
 export type Product = {
   id: string;
@@ -12,6 +13,7 @@ export type Product = {
   price: string;
 };
 
-export function getProductsData(): Product[] {
-  return products as Product[];
+export async function getProductsData(): Promise<Product[]> {
+  const data = await getCollectionFromDirectus('products');
+  return data as Product[];
 }

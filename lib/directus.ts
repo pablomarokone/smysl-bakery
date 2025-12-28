@@ -1,22 +1,40 @@
-import { createDirectus, rest } from '@directus/sdk';
-
-// URL Directus API (замените на свой, например, Railway)
-const DIRECTUS_URL = process.env.NEXT_PUBLIC_DIRECTUS_URL || 'http://localhost:8055';
-
-export const directus = createDirectus(DIRECTUS_URL).with(rest());
-
-// Пример функции для получения коллекции
-export async function getCollection(collection: string) {
-  const response = await directus.request(
-    rest.items(collection).readMany()
+// Универсальная функция для получения коллекции из Directus
+export async function getCollectionFromDirectus(collection: string) {
+  const response = await fetch(
+    `${DIRECTUS_URL}/items/${collection}`,
+    {
+      headers: {
+        Authorization: `Bearer ${DIRECTUS_TOKEN}`,
+      },
+    }
   );
-  return response.data;
+  const data = await response.json();
+  if (data && data.data) {
+    return data.data;
+  }
+  return null;
 }
 
-// Пример функции для получения одного элемента
-export async function getItem(collection: string, id: string | number) {
-  const response = await directus.request(
-    rest.items(collection).readOne(id)
+// ...existing code...
+
+// Получить hero (первый элемент коллекции hero)
+export async function getHeroFromDirectus() {
+  const response = await fetch(
+    `${DIRECTUS_URL}/items/hero`,
+    {
+      headers: {
+        Authorization: `Bearer ${DIRECTUS_TOKEN}`,
+      },
+    }
   );
-  return response.data;
+  const data = await response.json();
+  // Если коллекция hero содержит только один объект, возвращаем его
+  if (data && data.data && Array.isArray(data.data) && data.data.length > 0) {
+    return data.data[0];
+  }
+  // Если data.data — объект
+  if (data && data.data && typeof data.data === 'object') {
+    return data.data;
+  }
+  return null;
 }

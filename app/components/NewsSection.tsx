@@ -4,8 +4,7 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import directus from "@/app/lib/directus";
-import { readItems } from "@directus/sdk";
+import { getNewsData } from '../../lib/newsData';
 
 interface NewsImage {
   id: string;
@@ -30,30 +29,10 @@ export default function NewsSection() {
 
 
   useEffect(() => {
-    async function fetchNews() {
-      try {
-        const data = await directus.request(
-          readItems('news', {
-            fields: [
-              'id',
-              'slug',
-              'title',
-              'excerpt',
-              { news_photo: ['id', 'filename_disk'] },
-              'date',
-              'content',
-              { gallery: ['id', 'filename_disk'] },
-            ],
-            sort: ['-date'],
-          })
-        ) as NewsItem[];
-        setNews(data || []);
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error("Ошибка загрузки новостей:", e);
-      }
-    }
-    fetchNews();
+    getNewsData().then(setNews).catch(e => {
+      // eslint-disable-next-line no-console
+      console.error("Ошибка загрузки новостей:", e);
+    });
   }, []);
 
   // Получение URL изображения через filename_disk

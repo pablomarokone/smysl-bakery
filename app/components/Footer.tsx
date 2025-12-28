@@ -1,9 +1,15 @@
 import { FaInstagram, FaVk, FaTelegramPlane, FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 import Image from "./Image";
+
+import { useEffect, useState } from "react";
 import { getFooterData } from '../../lib/footerData';
 
 export default function Footer() {
-  const footer = getFooterData();
+  const [footer, setFooter] = useState<any>(null);
+  useEffect(() => {
+    getFooterData().then(setFooter);
+  }, []);
+  if (!footer) return null;
   return (
     <footer id="contacts" className="w-full py-16" style={{ backgroundColor: '#544a44' }}>
       <div className="max-w-7xl mx-auto px-4">

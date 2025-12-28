@@ -1,4 +1,6 @@
-import hero from '../content/hero.json';
-export function getHeroData() {
-  return hero;
+
+import { getHeroFromDirectus } from './directus';
+
+export async function getHeroData() {
+  return await getHeroFromDirectus();
 }
