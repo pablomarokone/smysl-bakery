@@ -6,7 +6,9 @@ import { NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
 import path from 'path';
 
-export async function GET(req, { params }) {
+import type { NextRequest } from 'next/server';
+
+export async function GET(req: NextRequest, { params }: { params: { collection: string } }) {
   const { collection } = params;
 
   const url = `${process.env.DIRECTUS_URL}/items/${collection}`;
@@ -60,5 +62,4 @@ export async function GET(req, { params }) {
       return NextResponse.json({ error: 'Failed to load' }, { status: 500 });
     }
   }
-}
 }
