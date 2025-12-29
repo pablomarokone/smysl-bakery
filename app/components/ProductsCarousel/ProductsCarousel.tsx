@@ -131,10 +131,10 @@ export default function ProductsCarousel() {
   }, [handleMobileScroll]);
 
   if (loading) {
-    return <div className="w-full py-12 text-center text-xl">Загрузка продуктов...</div>;
+    return <div className="w-full py-12 text-center text-xl" style={{ color: '#fff' }}>Загрузка продуктов...</div>;
   }
   if (!products.length) {
-    return <div className="w-full py-12 text-center text-xl">Нет доступных продуктов</div>;
+    return <div className="w-full py-12 text-center text-xl" style={{ color: '#fff' }}>Нет доступных продуктов</div>;
   }
   return (
     <section id="products" className="w-full py-12 bg-primary">

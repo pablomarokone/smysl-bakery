@@ -7,7 +7,13 @@ import NewsSection from "./components/NewsSection";
 import HeartSection from "./components/HeartSection";
 import FooterClient from "./components/FooterClient";
 
-export default function Home() {
+export const revalidate = 60; // ISR: обновлять раз в минуту
+
+export default async function Home() {
+  // Пример SSR/ISR: можно получать данные через sdk
+  // const header = await sdk.header();
+  // const products = await sdk.products();
+  // ...
   return (
     <>
       <Header />

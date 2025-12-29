@@ -1,36 +1,7 @@
 /* ==================== */
 /* CSS ПЕРЕМЕННЫЕ */
 /* ==================== */
-:root {
-  --header-height-mobile: 80px;
-  --header-height-desktop: 160px;
-  --color-primary: #5F8A48;
-  --color-secondary: #7BA862;
-  --color-accent: #9BC381;
-  --color-white: #ffffff;
-  --color-button: #ffecc6;
-  --color-button-hover: #f5e0b5;
-  --spacing-xs: 0.5rem;
-  --spacing-sm: 1rem;
-  --spacing-md: 1.5rem;
-  --spacing-lg: 2.5rem;
-  --spacing-xl: 3.5rem;
-  --container-2xl: 1400px;
-  
-  /* Переменные для кнопки */
-  --button-padding-base: 0.875rem 2.25rem;
-  --button-padding-md: 1rem 2.5rem;
-  --button-padding-lg: 1.125rem 3rem;
-  --button-font-base: 1.125rem;
-  --button-font-md: 1.25rem;
-  --button-font-lg: 1.5rem;
-  --button-border-base: 2px;
-  --button-border-lg: 3px;
-  
-  /* Золотое сечение */
-  --golden-ratio: 1.618;
-  --golden-ratio-inverse: 0.618;
-}
+/* Переменные вынесены в globals.css */
 
 /* ==================== */
 /* ОСНОВНОЙ КОНТЕЙНЕР HERO */
