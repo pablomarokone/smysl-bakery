@@ -1,9 +1,11 @@
 {
-  "logo": "/svg/logo.svg",
+  "logo": { "url": "/svg/logo.svg" },
   "menu": [
     { "label": "О нас", "href": "#about" },
     { "label": "Продукция", "href": "#products" },
     { "label": "Новости", "href": "/news" },
     { "label": "Контакты", "href": "#contacts" }
-  ]
+  ],
+  "phone": "+7 (999) 123-45-67",
+  "email": "info@smysl-est.ru"
 }

@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import styles from "./Header.module.css";
-import { fetchHeaderDataClient } from "../lib/fetch-header-client";
+import headerStatic from "../../content/header.json";
 
 // Типы можно импортировать или дублировать
 interface HeaderData {
@@ -17,12 +17,10 @@ interface HeaderData {
 }
 
 export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [header, setHeader] = useState<HeaderData | null>(null);
 
-  useEffect(() => {
-    fetchHeaderDataClient().then(setHeader);
-  }, []);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [header] = useState<HeaderData>(headerStatic);
+  // fetchHeaderDataClient отключён, используется статика
 
   useEffect(() => {
     if (isMenuOpen) {
