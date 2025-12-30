@@ -1,4 +1,5 @@
 import Header from "./components/Header";
+import TestDirectus from "./TestDirectus";
 import HeroSection from "./components/HeroSection";
 import ScrollingIcons from "./components/ScrollingIcons";
 import ProductsSection from "./components/ProductsSection";
@@ -24,6 +25,7 @@ export default async function Home() {
         <AboutSectionClient />
         <NewsSection />
         <HeartSection />
+        <TestDirectus />
       </main>
       <FooterClient />
     </>
